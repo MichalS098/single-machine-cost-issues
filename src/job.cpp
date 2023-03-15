@@ -6,16 +6,20 @@
 #include <algorithm>
 #include "../inc/job.hh"
 
-int getDelays(std::vector<Job> jobs)
+int getWeightedDelaysSum(std::vector<Job> jobs)
 {
     int c = 0;
     int delays = 0;
-    for (int i = 0; i < jobs.size(); ++i)
+    for (auto job : jobs)
     {
-        c += jobs[i].getLength();
-        delays += jobs[i].getDelay(c);
+        c += job.getLength();
+        delays += job.getDelay(c) * job.getWeight();
     }
     return delays;
+}
+
+std::vector<Job> getPDAlgorithmJobs(std::vector<Job> jobs)
+{    
 }
 
 std::vector<Job> getJobsFromFile(std::string filename, int dataset_number)

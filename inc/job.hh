@@ -14,7 +14,7 @@ public:
 
     int getWeight() const { return _w; }
     int getLength() const { return _p; }
-    int getDeadline() const { return _d; }
+    int getDeadline() const { return _d; }    
 
     int getDelay(int c) const
     {
@@ -22,5 +22,6 @@ public:
     }
 };
 
-int getDelays(std::vector<Job> jobs);
+int getWeightedDelaysSum(std::vector<Job> jobs);
 std::vector<Job> getJobsFromFile(std::string filename, int dataset_number);
+std::vector<Job> getPDAlgorithmJobs(std::vector<Job> jobs);
