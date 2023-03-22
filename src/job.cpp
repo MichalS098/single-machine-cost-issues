@@ -102,20 +102,19 @@ std::vector<Job> getJobsFromFile(std::string filename, int dataset_number)
     return jobs;
 }
 
-// operacja ktora bierze numer propblemu i zwraca zadania do niego
+/**
+ * @brief Get jobs configuration for operation number.
+ *
+ * @param jobs
+ * @param number
+ * @return std::vector<Job>
+ */
 std::vector<Job> getJobsFromOperationNumber(const std::vector<Job> &jobs, int number)
 {
-    std::vector<int> binary_vector = decimalToBinaryVector(number);
     std::vector<Job> result_jobs;
-
-    if (binary_vector.size() > jobs.size())
+    for (int i = 0, b = 1; i < jobs.size(); i++, b <<= 1)
     {
-        std::cerr << "number is too big for this operations" << std::endl;
-    }
-
-    for (int i = 0; i < binary_vector.size(); ++i)
-    {
-        if (binary_vector[i] == 1)
+        if (b & number)
         {
             result_jobs.push_back(jobs[i]);
         }

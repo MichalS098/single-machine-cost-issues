@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
         int dataset_number = std::stoi(argv[2]);
         std::vector<Job> jobs = getJobsFromFile(filename, dataset_number);
         printJobs(jobs);
-        std::vector<Job> jobs_operation = getJobsFromOperationNumber(jobs, 120);
+        std::vector<Job> jobs_operation = getJobsFromOperationNumber(jobs, 123);
         printJobs(jobs_operation);
 
         // std::vector<Job> optimal_jobs = getPDAlgorithmJobs(jobs);
