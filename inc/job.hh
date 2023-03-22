@@ -22,8 +22,9 @@ public:
     int getPenalty(int c) const { return getDelay(c) * _w; }
 };
 
-int getWeightedDelaysSum(std::vector<Job> jobs);
+int getWeightedDelaysSum(const std::vector<Job>& jobs);
+int getCmax(const std::vector<Job>& jobs);
 std::vector<Job> getJobsFromFile(std::string filename, int dataset_number);
-std::vector<Job> getPDAlgorithmJobs(std::vector<Job> jobs);
-std::vector<Job> getBruteForceMinPenaltyJobs(std::vector<Job> jobs);
-int getCmax(std::vector<Job> jobs);
+std::vector<Job> getPDAlgorithmJobs(const std::vector<Job>& jobs);
+std::vector<Job> getJobsFromOperationNumber(const std::vector<Job>& jobs, int number);
+void printJobs(const std::vector<Job>& jobs);

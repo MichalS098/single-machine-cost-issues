@@ -6,6 +6,16 @@
 #include <algorithm>
 #include <queue>
 #include "../inc/job.hh"
+#include "../inc/helpers.hh"
+
+void printJobs(const std::vector<Job> &jobs)
+{
+    std::cout << "id, p, w, d" << std::endl;
+    for (int i = 0; i < jobs.size(); i++)
+    {
+        std::cout << jobs[i].getId() << " " << jobs[i].getLength() << " " << jobs[i].getWeight() << " " << jobs[i].getDeadline() << " " << std::endl;
+    }
+}
 
 /**
  * @brief Get the Weighted Delays Sum number, known as WiTi.
@@ -14,7 +24,7 @@
  * @param jobs
  * @return int
  */
-int getWeightedDelaysSum(const std::vector<Job>& jobs)
+int getWeightedDelaysSum(const std::vector<Job> &jobs)
 {
     int c = 0;
     int delays = 0;
@@ -32,7 +42,7 @@ int getWeightedDelaysSum(const std::vector<Job>& jobs)
  * @param jobs
  * @return int
  */
-int getCmax(const std::vector<Job>& jobs)
+int getCmax(const std::vector<Job> &jobs)
 {
     int cmax = 0;
     for (auto job : jobs)
@@ -92,30 +102,37 @@ std::vector<Job> getJobsFromFile(std::string filename, int dataset_number)
     return jobs;
 }
 
+// operacja ktora bierze numer propblemu i zwraca zadania do niego
+std::vector<Job> getJobsFromOperationNumber(const std::vector<Job> &jobs, int number)
+{
+    std::vector<int> binary_vector = decimalToBinaryVector(number);
+    std::vector<Job> result_jobs;
 
-std::vector<Job> getPDAlgorithmJobs(const std::vector<Job>& jobs)
+    if (binary_vector.size() > jobs.size())
+    {
+        std::cerr << "number is too big for this operations" << std::endl;
+    }
+
+    for (int i = 0; i < binary_vector.size(); ++i)
+    {
+        if (binary_vector[i] == 1)
+        {
+            result_jobs.push_back(jobs[i]);
+        }
+    }
+
+    return result_jobs;
+}
+
+std::vector<Job> getPDAlgorithmJobs(const std::vector<Job> &jobs)
 {
     int N = jobs.size();
 
-    std::vector<Job> results;
-    std::vector<int> weighted_delays;
-    weighted_delays.push_back(0);
+    // std::map < std::vector<int>,
+    //     std::vector<int> weighted_delays;
+    // weighted_delays.push_back(0);
 
-    for (int i = 0; i < jobs.size(); i++)
-    {
-        auto jobs_copy = jobs;
-        auto job = jobs_copy[i];
-        jobs_copy.erase(jobs_copy.begin() + i);
-
-        auto cmax = getCmax(jobs_copy);
-
-        auto job_penalty = job.getPenalty(cmax);
-        auto K = job_penalty;
-
-        weighted_delays.push_back(getWeightedDelaysSum(jobs_copy));
-
-        auto F = job_penalty;
-
-        auto something = getWeightedDelaysSum(jobs_copy);
-    }
+    // for (int i = 1; i < weighted_delays.size(); i++)
+    // {
+    // }
 }

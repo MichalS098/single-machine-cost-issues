@@ -18,9 +18,13 @@ int main(int argc, char const *argv[])
         std::string filename = argv[1];
         int dataset_number = std::stoi(argv[2]);
         std::vector<Job> jobs = getJobsFromFile(filename, dataset_number);
-        std::vector<Job> optimal_jobs = getPDAlgorithmJobs(jobs);
-        std::cout << "Wynik nieposortowany: " << getWeightedDelaysSum(jobs) << std::endl;
-        std::cout << "Wynik posortowany: " << getWeightedDelaysSum(optimal_jobs) << std::endl;
+        printJobs(jobs);
+        std::vector<Job> jobs_operation = getJobsFromOperationNumber(jobs, 120);
+        printJobs(jobs_operation);
+
+        // std::vector<Job> optimal_jobs = getPDAlgorithmJobs(jobs);
+        // std::cout << "Wynik nieposortowany: " << getWeightedDelaysSum(jobs) << std::endl;
+        // std::cout << "Wynik posortowany: " << getWeightedDelaysSum(optimal_jobs) << std::endl;
     }
     catch (std::exception &e)
     {
