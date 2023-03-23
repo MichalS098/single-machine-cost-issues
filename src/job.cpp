@@ -4,6 +4,7 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <map>
 #include <queue>
 #include "../inc/job.hh"
 #include "../inc/helpers.hh"
@@ -40,16 +41,16 @@ int getWeightedDelaysSum(const std::vector<Job> &jobs)
  * @brief Get length of all jobs - or time needed to complete all jobs.
  *
  * @param jobs
- * @return int
+ * @return int total length of all jobs
  */
-int getCmax(const std::vector<Job> &jobs)
+int getTotalJobLength(const std::vector<Job> &jobs)
 {
-    int cmax = 0;
+    int total_length = 0;
     for (auto job : jobs)
     {
-        cmax += job.getLength();
+        total_length += job.getLength();
     }
-    return cmax;
+    return total_length;
 }
 
 std::vector<Job> getJobsFromFile(std::string filename, int dataset_number)
@@ -100,38 +101,4 @@ std::vector<Job> getJobsFromFile(std::string filename, int dataset_number)
     }
 
     return jobs;
-}
-
-/**
- * @brief Get jobs configuration for operation number.
- *
- * @param jobs
- * @param number
- * @return std::vector<Job>
- */
-std::vector<Job> getJobsFromOperationNumber(const std::vector<Job> &jobs, int number)
-{
-    std::vector<Job> result_jobs;
-    for (int i = 0, b = 1; i < jobs.size(); i++, b <<= 1)
-    {
-        if (b & number)
-        {
-            result_jobs.push_back(jobs[i]);
-        }
-    }
-
-    return result_jobs;
-}
-
-std::vector<Job> getPDAlgorithmJobs(const std::vector<Job> &jobs)
-{
-    int N = jobs.size();
-
-    // std::map < std::vector<int>,
-    //     std::vector<int> weighted_delays;
-    // weighted_delays.push_back(0);
-
-    // for (int i = 1; i < weighted_delays.size(); i++)
-    // {
-    // }
 }

@@ -5,6 +5,8 @@
 #include <sstream>
 #include <algorithm>
 #include "../inc/job.hh"
+#include "../inc/helpers.hh"
+#include "../inc/job_algorithms.hh"
 
 int main(int argc, char const *argv[])
 {
@@ -15,16 +17,13 @@ int main(int argc, char const *argv[])
             std::cout << "Usage: " << argv[0] << " <data_filename> <dataset_number>" << std::endl;
             return 1;
         }
+
         std::string filename = argv[1];
         int dataset_number = std::stoi(argv[2]);
         std::vector<Job> jobs = getJobsFromFile(filename, dataset_number);
-        printJobs(jobs);
-        std::vector<Job> jobs_operation = getJobsFromOperationNumber(jobs, 123);
-        printJobs(jobs_operation);
-
-        // std::vector<Job> optimal_jobs = getPDAlgorithmJobs(jobs);
-        // std::cout << "Wynik nieposortowany: " << getWeightedDelaysSum(jobs) << std::endl;
-        // std::cout << "Wynik posortowany: " << getWeightedDelaysSum(optimal_jobs) << std::endl;
+        int optimal_witi = getPDAlgorithmWitiSum(jobs);
+        std::cout << "Wynik nieposortowany: " << getWeightedDelaysSum(jobs) << std::endl;        
+        std::cout << "Wynik optymalny: " << optimal_witi << std::endl;
     }
     catch (std::exception &e)
     {

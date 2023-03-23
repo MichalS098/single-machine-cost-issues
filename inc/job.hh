@@ -23,8 +23,6 @@ public:
 };
 
 int getWeightedDelaysSum(const std::vector<Job>& jobs);
-int getCmax(const std::vector<Job>& jobs);
+int getTotalJobLength(const std::vector<Job>& jobs);
 std::vector<Job> getJobsFromFile(std::string filename, int dataset_number);
-std::vector<Job> getPDAlgorithmJobs(const std::vector<Job>& jobs);
-std::vector<Job> getJobsFromOperationNumber(const std::vector<Job>& jobs, int number);
 void printJobs(const std::vector<Job>& jobs);
