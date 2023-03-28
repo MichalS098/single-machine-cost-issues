@@ -1,6 +1,7 @@
 #include "../inc/job.hh"
 #include "../inc/helpers.hh"
 #include "../inc/job_algorithms.hh"
+#include <map>
 
 std::vector<Job> filterJobsByOperationNumber(const std::vector<Job> &jobs, int decimal_number)
 {
@@ -23,8 +24,7 @@ int getPDAlgorithmWitiSum(const std::vector<Job> &jobs)
     int jobs_size = jobs.size();
     int memory_size = 1 << jobs_size;
     int max_op_num = 1 << jobs_size;
-    std::vector<int> weighted_delays(memory_size, INT_MAX);
-    weighted_delays[0] = 0;
+    std::map<int, int> weighted_delays = {{0, 0}};
 
     for (int op_num = 1; op_num < max_op_num; op_num++)
     {
@@ -41,8 +41,8 @@ int getPDAlgorithmWitiSum(const std::vector<Job> &jobs)
                 min_witi = witi;
             }
         }
-        weighted_delays.push_back(min_witi);
+        weighted_delays[op_num] = min_witi;
     }
 
-    return weighted_delays[weighted_delays.size() - 1];
+    return weighted_delays[max_op_num - 1];
 }
