@@ -2,6 +2,8 @@
 #include "../inc/helpers.hh"
 #include "../inc/job_algorithms.hh"
 #include <map>
+#include <algorithm>
+#include <iostream>
 
 std::vector<Job> filterJobsByOperationNumber(const std::vector<Job> &jobs, int decimal_number)
 {
@@ -19,29 +21,28 @@ std::vector<Job> filterJobsByOperationNumber(const std::vector<Job> &jobs, int d
     return result_jobs;
 }
 
+
 int getPDAlgorithmWitiSum(const std::vector<Job> &jobs)
 {
     int jobs_size = jobs.size();
     int memory_size = 1 << jobs_size;
-    int max_op_num = 1 << jobs_size;
-    std::map<int, int> weighted_delays = {{0, 0}};
+    int max_op_num = memory_size;
+    std::vector<int> weighted_delays(memory_size);
+    weighted_delays[0] = 0;
 
     for (int op_num = 1; op_num < max_op_num; op_num++)
     {
-        std::vector<Job> op_jobs = filterJobsByOperationNumber(jobs, op_num);
-        int min_witi = INT_MAX;
+        std::vector<Job> filtered_jobs = filterJobsByOperationNumber(jobs, op_num);
+        int length = getTotalJobLength(filtered_jobs);
+        weighted_delays[op_num] = INT_MAX;
 
-        for (int i = 0; i < op_jobs.size(); ++i)
+        for (int i = 0, b = 1; i < jobs_size; ++i, b <<= 1)
         {
-            int op_num_without_i = op_num ^ (1 << i);
-            int witi = weighted_delays[op_num_without_i] + op_jobs[i].getDelay(getTotalJobLength(op_jobs));
-
-            if (witi < min_witi)
+            if (op_num & b)
             {
-                min_witi = witi;
+                weighted_delays[op_num] = std::min(weighted_delays[op_num], weighted_delays[op_num - b] + jobs[i].getPenalty(length));
             }
         }
-        weighted_delays[op_num] = min_witi;
     }
 
     return weighted_delays[max_op_num - 1];
